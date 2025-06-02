@@ -1,26 +1,37 @@
 package ru.netology.pages;
 
-import com.codeborne.selenide.SelenideElement;
-import ru.netology.data.DataHelper;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.visible;
+
+import com.codeborne.selenide.SelenideElement;
+import com.banking.data.BankCard;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Condition.*;
 
 public class TransferPage {
 
-    private SelenideElement header = $("[data-test-id='dashboard']");
-    private SelenideElement amount = $("[data-test-id='amount'] input");
-    private SelenideElement from = $("[data-test-id='from'] input");
-    private SelenideElement button = $("[data-test-id='action-transfer']");
+    // Элементы страницы
+    private SelenideElement pageHeader = $("[data-test-id='dashboard']");
+    private SelenideElement amountInput = $("[data-test-id='amount'] input");
+    private SelenideElement cardNumberInput = $("[data-test-id='from'] input");
+    private SelenideElement transferButton = $("[data-test-id='action-transfer']");
 
-    public TransferPage () {
-        header.should(visible);
+    // Проверяем, что страница загрузилась
+    public TransferPage() {
+        pageHeader.shouldBe(visible, Duration.ofSeconds(5));
     }
 
-    public void transferFrom(String transferAmount, DataHelper.CardInfo cardInfo) {
-        amount.setValue(transferAmount);
-        from.setValue(cardInfo.getCardNumber());
-        button.click();
+    /**
+     * Выполняет перевод денег с указанной карты
+     *
+     * @param amount Сумма перевода (например, "5000")
+     * @param sourceCard Данные карты, с которой выполняется перевод
+     */
+    public void makeTransfer(String amount, BankCard sourceCard) {
+        amountInput.setValue(amount);
+        cardNumberInput.setValue(sourceCard.getCardNumber());
+        transferButton.click();
     }
 }
+
+
+

@@ -1,23 +1,32 @@
 package ru.netology.pages;
 
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.data.DataHelper;
-
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class VerificationPage {
 
-    private SelenideElement codeField = $("[data-test-id='code'] input");
-    private SelenideElement verifyButton = $("[data-test-id='action-verify']");
+
+    private SelenideElement securityCodeInput = $(".auth-code-input");
+    private SelenideElement submitButton = $(".verify-security-code");
 
     public VerificationPage() {
-        codeField.should(visible);
+        securityCodeInput.shouldBe(visible)
+                .shouldBe(enabled);
     }
 
+
     public DashboardPage validVerify(DataHelper.VerificationCode verificationCode) {
-        codeField.setValue(verificationCode.getCode());
-        verifyButton.click();
+        enterVerificationCode(verificationData.getCode());
+        submitVerification();
         return new DashboardPage();
+    }
+
+    private void enterVerificationCode(String code) {
+        securityCodeInput.setValue(code);
+    }
+
+    private void submitVerification() {
+        submitButton.click();
     }
 }

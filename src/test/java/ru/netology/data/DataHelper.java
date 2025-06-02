@@ -1,54 +1,77 @@
 package ru.netology.data;
 
-import lombok.Value;
-
 import java.util.Objects;
 
-public class DataHelper {
+public final class DataHelper {
     private DataHelper() {
     }
 
-    @Value
-    public static class AuhtInfo {
-        String login;
-        String password;
-    }
+    public static class UserCredentials {
+        private final String username;
+        private final String passphrase;
 
-    public static AuhtInfo getAuhtInfo() {
-        return new AuhtInfo("vasya", "qwerty123");
-    }
-
-    @Value
-    public static class VerificationCode {
-        String code;
-    }
-
-    public static VerificationCode getVerificationCode() {
-        return new VerificationCode("12345");
-    }
-
-    @Value
-    public static class CardInfo {
-        String cardNumber;
-    }
-
-    public static CardInfo getFirstCard() {
-        return new CardInfo("5559 0000 0000 0001");
-    }
-
-    public static CardInfo getSecondCard() {
-        return new CardInfo("5559 0000 0000 0002");
-    }
-
-    public static CardInfo getCard(String cardNumber) {
-        CardInfo CardInfo = null;
-
-        if (Objects.equals(cardNumber, "5559 0000 0000 0001")) {
-            CardInfo = new CardInfo("5559 0000 0000 0001");
+        public UserCredentials(String username, String passphrase) {
+            this.username = username;
+            this.passphrase = passphrase;
         }
-        if (Objects.equals(cardNumber, "5559 0000 0000 0002")) {
-            CardInfo = new CardInfo("5559 0000 0000 0002");
+
+        public String getUsername() {
+            return username;
         }
-        return CardInfo;
+
+        public String getPassphrase() {
+            return passphrase;
+        }
+    }
+
+    public static UserCredentials getDefaultCredentials() {
+        return new UserCredentials("vasya", "qwerty123");
+    }
+
+    public static class SecurityCode {
+        private final String verificationDigits;
+
+        public SecurityCode(String verificationDigits) {
+            this.verificationDigits = verificationDigits;
+        }
+
+        public String getVerificationDigits() {
+            return verificationDigits;
+        }
+    }
+
+    public static SecurityCode getDefaultSecurityCode() {
+        return new SecurityCode("12345");
+    }
+
+    public static class PaymentCard {
+        private final String cardIdentifier;
+
+        public PaymentCard(String cardIdentifier) {
+            this.cardIdentifier = cardIdentifier;
+        }
+
+        public String getCardIdentifier() {
+            return cardIdentifier;
+        }
+    }
+
+    public static PaymentCard getPrimaryCard() {
+        return new PaymentCard("5559 0000 0000 0001");
+    }
+
+    public static PaymentCard getSecondaryCard() {
+        return new PaymentCard("5559 0000 0000 0002");
+    }
+
+    public static PaymentCard getCardDetails(String cardIdentifier) {
+        switch (cardIdentifier) {
+            case "5559 0000 0000 0001":
+                return getPrimaryCard();
+            case "5559 0000 0000 0002":
+                return getSecondaryCard();
+            default:
+                return null;
+        }
     }
 }
