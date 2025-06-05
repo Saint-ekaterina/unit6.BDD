@@ -1,0 +1,24 @@
+image: Visual Studio 2019
+configuration: Release
+
+environment:
+  JAVA_HOME: C:\Users\Катюша\AppData\Local\Programs\Eclipse Adoptium\jdk-11.0.27.6-hotspot\
+
+install:
+  - ps: |
+      Add-Type -AssemblyName System.IO.Compression.FileSystem
+      if (!(Test-Path -Path "C:\gradle" )) {
+        (new-object System.Net.WebClient).DownloadFile(
+          'https://services.gradle.org/distributions/gradle-7.6-bin.zip',
+          'C:\gradle-bin.zip'
+        )
+        [System.IO.Compression.ZipFile]::ExtractToDirectory(
+          "C:\gradle-bin.zip",
+          "C:\gradle"
+        )
+      }
+  - set PATH=C:\gradle\gradle-7.6\bin;%JAVA_HOME%\bin;%PATH%
+  - gradle -v
+
+build_script:
+  - gradlew.bat test --info -Dselenide.headless=true
