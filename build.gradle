@@ -1,6 +1,8 @@
 plugins {
     id 'java'
+
 }
+
 
 group = 'ru.netology'
 version = '1.0-SNAPSHOT'
@@ -14,12 +16,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    testImplementation "org.junit.jupiter:junit-jupiter:5.8.2"
     testImplementation 'com.codeborne:selenide:6.19.1'
-    testImplementation 'com.google.code.gson:gson:2.8.6'
-    testCompileOnly 'org.projectlombok:lombok:1.18.24'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
-    testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.3'
+    testImplementation 'org.slf4j:slf4j-simple:1.7.32'
+    testCompileOnly 'org.projectlombok:lombok:1.18.28'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 }
 
 test {
