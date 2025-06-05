@@ -3,7 +3,7 @@ package ru.netology.pages;
 
 
 import com.codeborne.selenide.SelenideElement;
-import com.banking.data.BankCard;
+import ru.netology.data.BankCard;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Condition.*;
 
